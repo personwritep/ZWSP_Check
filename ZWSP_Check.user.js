@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        ZWSP Check
 // @namespace        http://tampermonkey.net/
-// @version        0.1
+// @version        0.2
 // @description        Code checking Tool about "zero width space"
 // @author        GitHub User
 // @match        https://github.com/*
@@ -52,6 +52,8 @@ function editor_check(){
         let monitor1=new MutationObserver(code_ck);
         monitor1.observe(target, { childList: true });
 
+        code_ck();
+
         function code_ck(){
             let cml=editor.querySelector('.cm-line'); // コードの最初の1行目
 
@@ -61,11 +63,35 @@ function editor_check(){
             let title=document.querySelector('.Box-sc-g0xbh4-0.iXNuQB');
             if(title){
                 if(result){
-                    title.style.background='red'; }
+                    title.style.background='red';
+                    delete_zwsp(cml); }
                 else{
                     title.style.background=''; }}
 
         } // code_ck()
+
+
+        function delete_zwsp(cml){
+            let sw='<li class="Box-sc-g0xbh4-0 idgUkN">'+
+                '<button class="exsw cBLqoI">Delete ZWSP</button></li>'+
+                '<style>.exsw { position: absolute; left: 50px; height: 32px; width: 100px; '+
+                'padding: 0 0 2px; color: #fff; background: #000; border-radius: 6px; }</style>';
+
+            let ul=document.querySelector('.etyAeg');
+            if(ul){
+                if(!ul.querySelector('.exsw')){
+                    ul.insertAdjacentHTML('beforeend', sw); }
+
+                let exsw=ul.querySelector('.exsw');
+                if(exsw){
+                    exsw.onclick=()=>{
+                        cml.textContent=cml.textContent.replace('\u200B', '');
+                        setTimeout(()=>{
+                            code_ck();
+                        }, 500);
+                    }}}
+
+        } // delete_zwsp()
 
     }} // editor_check()
 
