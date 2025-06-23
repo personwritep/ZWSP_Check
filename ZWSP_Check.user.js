@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        ZWSP Check
 // @namespace        http://tampermonkey.net/
-// @version        0.2
+// @version        0.3
 // @description        Code checking Tool about "zero width space"
 // @author        GitHub User
 // @match        https://github.com/*
@@ -18,11 +18,17 @@ monitor0.observe(target, { childList: true });
 
 
 function check(){
-    textarea_check();
+    let path=location.pathname;
 
-    setTimeout(()=>{
-        editor_check();
-    }, 1000); }
+    if(path.includes('/blob/main/')){
+        setTimeout(()=>{
+            textarea_check();
+        }, 100); }
+
+    if(path.includes('/edit/main/')){
+        setTimeout(()=>{
+            editor_check();
+        }, 1000); }}
 
 
 
@@ -33,12 +39,14 @@ function textarea_check(){
         let regex =/\u200B/; // ZeroWidthSpace
         result=regex.test(code_text.textContent); }
 
-    let title=document.querySelector('.Box-sc-g0xbh4-0.kTvpNk');
+    let title=document.querySelector('.BlobViewHeader-module__Box_1--PPihg');
     if(title){
         if(result){
             title.style.background='red'; }
         else{
             title.style.background=''; }}
+    else{
+        alert("⛔ クラス名の変更で タイトル部が取得できません A"); }
 
 } // textarea_check()
 
@@ -60,24 +68,28 @@ function editor_check(){
             let regex =/\u200B/; // ZeroWidthSpace
             let result=regex.test(cml.textContent);
 
-            let title=document.querySelector('.Box-sc-g0xbh4-0.iXNuQB');
+            let title=document.querySelector('.BlobEditHeader-module__Box--KeOBS');
             if(title){
                 if(result){
                     title.style.background='red';
                     delete_zwsp(cml); }
                 else{
                     title.style.background=''; }}
+            else{
+                alert("⛔ クラス名の変更で タイトル部が取得できません"); }
 
         } // code_ck()
 
 
         function delete_zwsp(cml){
-            let sw='<li class="Box-sc-g0xbh4-0 idgUkN">'+
-                '<button class="exsw cBLqoI">Delete ZWSP</button></li>'+
-                '<style>.exsw { position: absolute; left: 50px; height: 32px; width: 100px; '+
-                'padding: 0 0 2px; color: #fff; background: #000; border-radius: 6px; }</style>';
+            let sw='<li class="prc-SegmentedControl-Item-7Aq6h">'+
+                '<button class="exsw prc-SegmentedControl-Button-ojWXD">Delete ZWSP</button>'+
+                '</li>'+
+                '<style>.exsw { position: absolute; left: 60px; height: 32px; width: 100px; '+
+                'padding: 0 0 2px; color: #fff; background: #000; border-radius: 6px; } '+
+                '</style>';
 
-            let ul=document.querySelector('.etyAeg');
+            let ul=document.querySelector('.prc-SegmentedControl-SegmentedControl-e7570');
             if(ul){
                 if(!ul.querySelector('.exsw')){
                     ul.insertAdjacentHTML('beforeend', sw); }
@@ -94,7 +106,6 @@ function editor_check(){
         } // delete_zwsp()
 
     }} // editor_check()
-
 
 
 
