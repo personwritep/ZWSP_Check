@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        ZWSP Check
 // @namespace        http://tampermonkey.net/
-// @version        0.3
+// @version        0.4
 // @description        Code checking Tool about "zero width space"
 // @author        GitHub User
 // @match        https://github.com/*
@@ -39,12 +39,12 @@ function textarea_check(){
         let regex =/\u200B/; // ZeroWidthSpace
         result=regex.test(code_text.textContent); }
 
-    let title=document.querySelector('.BlobViewHeader-module__Box_1--PPihg');
+    let title=document.querySelector('div[class*="BlobViewHeader-module__Box_1"]');
     if(title){
         if(result){
             title.style.background='red'; }
         else{
-            title.style.background=''; }}
+            title.style.background='#d8f4ff'; }}
     else{
         alert("⛔ クラス名の変更で タイトル部が取得できません A"); }
 
@@ -68,28 +68,30 @@ function editor_check(){
             let regex =/\u200B/; // ZeroWidthSpace
             let result=regex.test(cml.textContent);
 
-            let title=document.querySelector('.BlobEditHeader-module__Box--KeOBS');
+            let title=document.querySelector('div[class*="BlobEditHeader-module__Box"]');
             if(title){
                 if(result){
                     title.style.background='red';
                     delete_zwsp(cml); }
                 else{
-                    title.style.background=''; }}
+                    title.style.background='#d8f4ff'; }}
             else{
-                alert("⛔ クラス名の変更で タイトル部が取得できません"); }
+                alert("⛔ クラス名の変更で タイトル部が取得できません B"); }
 
         } // code_ck()
 
 
         function delete_zwsp(cml){
-            let sw='<li class="prc-SegmentedControl-Item-7Aq6h">'+
-                '<button class="exsw prc-SegmentedControl-Button-ojWXD">Delete ZWSP</button>'+
+            let sw='<li class="exsw_li">'+
+                '<button class="exsw">Delete ZWSP</button>'+
                 '</li>'+
-                '<style>.exsw { position: absolute; left: 60px; height: 32px; width: 100px; '+
+                '<style>'+
+                '.exsw_li{ display: block; flex-grow: 1; margin: -1px 0; position: relative; } '+
+                '.exsw { position: absolute; left: 60px; height: 32px; width: 100px; '+
                 'padding: 0 0 2px; color: #fff; background: #000; border-radius: 6px; } '+
                 '</style>';
 
-            let ul=document.querySelector('.prc-SegmentedControl-SegmentedControl-e7570');
+            let ul=document.querySelector('ul[class*="prc-SegmentedControl-SegmentedControl"]');
             if(ul){
                 if(!ul.querySelector('.exsw')){
                     ul.insertAdjacentHTML('beforeend', sw); }
@@ -106,7 +108,3 @@ function editor_check(){
         } // delete_zwsp()
 
     }} // editor_check()
-
-
-
-
