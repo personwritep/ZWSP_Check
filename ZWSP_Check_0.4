@@ -41,7 +41,8 @@ function textarea_check(){
     let title=document.querySelector('div[class*="BlobViewHeader-module__Box_1"]');
     if(title){
         if(result){
-            title.style.background='red'; }
+            title.style.background='red';
+            help(); }
         else{
             title.style.background='#d8f4ff'; }}
     else{
@@ -67,10 +68,11 @@ function editor_check(){
             if(title){
                 if(result){
                     title.style.background='red';
+                    help();
                     delete_zwsp(cml); }
                 else{
-                    zwsp_sw_hide();
-                    title.style.background='#d8f4ff'; }}
+                    title.style.background='#d8f4ff';
+                    zwsp_sw_hide(); }}
             else{
                 alert("⛔ クラス名の変更で タイトル部が取得できません B"); }
 
@@ -78,21 +80,21 @@ function editor_check(){
 
 
         function delete_zwsp(cml){
-            let sw='<li class="exsw_li">'+
+            let sw='<p class="exsw_p">'+
                 '<button class="exsw">Delete ZWSP</button>'+
-                '</li>'+
+                '</p>'+
                 '<style>'+
-                '.exsw_li{ display: block; flex-grow: 1; margin: -1px 0; position: relative; } '+
-                '.exsw { position: absolute; left: 60px; height: 32px; width: 100px; '+
-                'padding: 0 0 2px; color: #fff; background: #000; border-radius: 6px; } '+
+                '.exsw_p{ margin: 0 0 -1px 40px; } '+
+                '.exsw { height: 30px; width: 100px; padding: 0 0 1px; '+
+                'color: #fff; background: #000; border: none; border-radius: 6px; } '+
                 '</style>';
 
             let ul=document.querySelector('ul[class*="prc-SegmentedControl-SegmentedControl"]');
             if(ul){
-                if(!ul.querySelector('.exsw')){
-                    ul.insertAdjacentHTML('beforeend', sw); }
+                if(!document.querySelector('.exsw')){
+                    ul.insertAdjacentHTML('afterend', sw); }
 
-                let exsw=ul.querySelector('.exsw');
+                let exsw=document.querySelector('.exsw');
                 if(exsw){
                     exsw.onclick=()=>{
                         cml.textContent=cml.textContent.replace('\u200B', '');
@@ -110,3 +112,22 @@ function editor_check(){
                 exsw.remove(); }}
 
     }} // editor_check()
+
+
+
+function help(){
+    let help_url='https://ameblo.jp/personwritep/entry-12952718090.html';
+    let help_sw=
+        '<p class="zwsp_help">'+
+        '<a href="'+ help_url +'" rel="noopener noreferrer" target="_blank">?</a></p>'+
+        '<style>'+
+        '.zwsp_help a{ font-size: 18px; font-weight: bold; line-height: 0; padding: 0px 8px; '+
+        'margin-left: 20px; border-radius: 20px; background: #fff; vertical-align: -7px; } '+
+        '</style>';
+
+    let ul=document.querySelector('ul[class*="prc-SegmentedControl-SegmentedControl"]');
+    if(ul){
+        if(!document.querySelector('.zwsp_help')){
+            ul.insertAdjacentHTML('afterend', help_sw); }}
+
+} // help()
