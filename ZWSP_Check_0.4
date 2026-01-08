@@ -16,7 +16,6 @@ let target=document.querySelector('head');
 let monitor0=new MutationObserver(check);
 monitor0.observe(target, { childList: true });
 
-
 function check(){
     let path=location.pathname;
 
@@ -56,10 +55,6 @@ function editor_check(){
     let editor=document.querySelector('.js-codemirror-editor .cm-content[contenteditable=true]');
     if(editor){
 
-        let target=editor;
-        let monitor1=new MutationObserver(code_ck);
-        monitor1.observe(target, { childList: true });
-
         code_ck();
 
         function code_ck(){
@@ -74,6 +69,7 @@ function editor_check(){
                     title.style.background='red';
                     delete_zwsp(cml); }
                 else{
+                    zwsp_sw_hide();
                     title.style.background='#d8f4ff'; }}
             else{
                 alert("⛔ クラス名の変更で タイトル部が取得できません B"); }
@@ -106,5 +102,11 @@ function editor_check(){
                     }}}
 
         } // delete_zwsp()
+
+
+        function zwsp_sw_hide(){
+            let exsw=document.querySelector('.exsw');
+            if(exsw){
+                exsw.remove(); }}
 
     }} // editor_check()
