@@ -4,7 +4,7 @@
 赤にして知らせます。<br>
 <br>
 このツールの詳細は、以下のページを参照ください。<br>
-https://ameblo.jp/personwritep/entry-12883952130.html
+https://ameblo.jp/personwritep/entry-12952718090.html
 
 
 
