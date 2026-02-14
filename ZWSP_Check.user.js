@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        ZWSP Check 🔴
 // @namespace        http://tampermonkey.net/
-// @version        0.6
+// @version        0.7
 // @description        Code checking Tool about "zero width space"
 // @author        GitHub User
 // @match        https://github.com/*
@@ -25,7 +25,7 @@ function check(){
             file_name_input();
         }, 400); }
 
-    if(path.includes('/edit/main/')){
+    if(path.includes('/edit/main/') || path.includes('/new/main')){
         setTimeout(()=>{
             editor_check();
             file_name_input();
