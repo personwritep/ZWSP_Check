@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        ZWSP Check 🔴
 // @namespace        http://tampermonkey.net/
-// @version        0.7
+// @version        0.8
 // @description        Code checking Tool about "zero width space"
 // @author        GitHub User
 // @match        https://github.com/*
@@ -40,7 +40,7 @@ function textarea_check(){
         let regex =/\u200B/; // ZeroWidthSpace
         result=regex.test(code_text.textContent); }
 
-    let title=document.querySelector('div[class*="BlobViewHeader-module__Box_1"]');
+    let title=document.querySelector('div[class*="BlobViewHeader-module_OdKveq_Box_1"]');
     if(title){
         if(result){
             title.style.background='red';
@@ -48,7 +48,8 @@ function textarea_check(){
         else{
             title.style.background='#d8f4ff'; }}
     else{
-        alert("⛔ クラス名の変更で タイトル部が取得できません A"); }
+        alert("⛔ クラス名の変更で タイトル部が取得できません A\n"+
+              "　　　　　　　ZWSP Check 🔴 / JavaScript"); }
 
 } // textarea_check()
 
@@ -66,7 +67,7 @@ function editor_check(){
             let regex =/\u200B/; // ZeroWidthSpace
             let result=regex.test(cml.textContent);
 
-            let title=document.querySelector('div[class*="BlobEditHeader-module__Box"]');
+            let title=document.querySelector('div[class*="BlobEditHeader-module_5oioMW_Box"]');
             if(title){
                 if(result){
                     title.style.background='red';
@@ -76,7 +77,8 @@ function editor_check(){
                     title.style.background='#d8f4ff';
                     zwsp_sw_hide(); }}
             else{
-                alert("⛔ クラス名の変更で タイトル部が取得できません B"); }
+                alert("⛔ クラス名の変更で タイトル部が取得できません B\n"+
+                      "　　　　　　　ZWSP Check 🔴 / JavaScript"); }
 
         } // code_ck()
 
