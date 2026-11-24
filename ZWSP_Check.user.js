@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        ZWSP Check 🔴
 // @namespace        http://tampermonkey.net/
-// @version        0.9
+// @version        1.0
 // @description        Code checking Tool about "zero width space"
 // @author        GitHub User
 // @match        https://github.com/*
@@ -22,13 +22,11 @@ function check(){
     if(path.includes('/blob/main/')){
         setTimeout(()=>{
             textarea_check();
-            file_name_input();
         }, 800); }
 
     if(path.includes('/edit/main/') || path.includes('/new/main')){
         setTimeout(()=>{
             editor_check();
-            file_name_input();
         }, 1000); }}
 
 
@@ -135,10 +133,3 @@ function help(){
             ul.insertAdjacentHTML('afterend', help_sw); }}
 
 } // help()
-
-
-
-function file_name_input(){
-    let fname_input=document.querySelector('input[aria-label="File name"]');
-    if(fname_input){
-        fname_input.style.width='320px'; }}
